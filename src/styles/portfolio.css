@@ -160,7 +160,7 @@ p {
     padding: 1.5rem;
     margin: 0 1rem 1rem 1rem;
     background-color: #000004;
-    transform: translateY(110%); /* Hidden below container initially */
+    transform: translateY(115%); /* Hidden below container initially */
     transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transition-delay: 0.7s;
 }
@@ -265,6 +265,7 @@ p {
     position: fixed;
     bottom: 2rem;
     left: 50%;
+    transform: translateX(-50%);
     padding: 1rem;
     font-size: 0.9rem;
     opacity: 0.8;

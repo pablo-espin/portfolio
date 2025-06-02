@@ -28,7 +28,7 @@ const { items } = Astro.props;
             {items.map((item) => (
                 <a href={item.link} class="portfolio-link">
                     <div class="portfolio-item" data-image={item.id}>
-                        <div class="background-image"></div>
+                        <div class="background-image" style={`background-image: url('${item.backgroundImage}')`}></div>
                         <div class="mosaic-overlay"></div>
                         <div class="item-content" id={`${item.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}-card`}>
                             <div class="subtitle">{item.subtitle}</div>

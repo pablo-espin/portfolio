@@ -11,7 +11,7 @@ const portfolioItems = [
     subtitle: "Web Design | Brand Identity",
     description: "A website for an open source intelligence research company.",
     link: "https://pabloespinosa.co/khthon/",
-    backgroundImage: "khthon-bg_2.webp"
+    backgroundImage: "/images/khthon-bg.webp"
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const portfolioItems = [
     subtitle: "Web Design | Visual Identity | Animation",
     description: "The visual identity of a rock, jazz and progressive music band.",
     link: "https://pabloespinosa.co/carambolo/",
-    backgroundImage: "carambolo-bg.webp"
+    backgroundImage: "/images/carambolo-bg.webp"
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const portfolioItems = [
     subtitle: "Web Design & Dev | Brand Identity",
     description: "The brand identity of a film production company.",
     link: "#",
-    backgroundImage: "aventura-bg.webp"
+    backgroundImage: "/images/aventura-bg.webp"
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ const portfolioItems = [
     subtitle: "Game Dev",
     description: "A video game about data centres I'm developing.",
     link: "#",
-    backgroundImage: "amitw-bg.webp"
+    backgroundImage: "/images/amitw-bg.webp"
   },
   {
     id: 5,
@@ -43,19 +43,21 @@ const portfolioItems = [
     subtitle: "Web Design & Dev",
     description: "A website for a research collective exploring the arts for social transformation.",
     link: "#",
-    backgroundImage: "wetlands-bg.webp"
+    backgroundImage: "/images/wetlands-bg.webp"
   }
 ];
 ---
 
 <BaseLayout title="Pablo Espinosa - Portfolio" description="I'm a UX designer and digital humanities researcher working on projects that drive inclusivity and social impact.">
-  <PortfolioGrid items={portfolioItems} />
-  <ScrollHint />
+  <main>
+    <PortfolioGrid items={portfolioItems} />
+    <ScrollHint />
+  </main>
 </BaseLayout>
 
-<style>
+<style is:global>
   /* Import your portfolio styles */
-  @import '../styles/portfolio.css';
+  @import url('../styles/portfolio.css');
 </style>
 
 <script>
