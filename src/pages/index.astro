@@ -1,11 +1,64 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PortfolioGrid from '../components/PortfolioGrid.astro';
+import ScrollHint from '../components/ScrollHint.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Portfolio data
+const portfolioItems = [
+  {
+    id: 1,
+    title: "Khthon",
+    subtitle: "Web Design | Brand Identity",
+    description: "A website for an open source intelligence research company.",
+    link: "https://pabloespinosa.co/khthon/",
+    backgroundImage: "khthon-bg_2.webp"
+  },
+  {
+    id: 2,
+    title: "Carambolo",
+    subtitle: "Web Design | Visual Identity | Animation",
+    description: "The visual identity of a rock, jazz and progressive music band.",
+    link: "https://pabloespinosa.co/carambolo/",
+    backgroundImage: "carambolo-bg.webp"
+  },
+  {
+    id: 3,
+    title: "Aventura Films",
+    subtitle: "Web Design & Dev | Brand Identity",
+    description: "The brand identity of a film production company.",
+    link: "#",
+    backgroundImage: "aventura-bg.webp"
+  },
+  {
+    id: 4,
+    title: "All the Memories in the World",
+    subtitle: "Game Dev",
+    description: "A video game about data centres I'm developing.",
+    link: "#",
+    backgroundImage: "amitw-bg.webp"
+  },
+  {
+    id: 5,
+    title: "Reimagining the Wetlands",
+    subtitle: "Web Design & Dev",
+    description: "A website for a research collective exploring the arts for social transformation.",
+    link: "#",
+    backgroundImage: "wetlands-bg.webp"
+  }
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Pablo Espinosa - Portfolio" description="I'm a UX designer and digital humanities researcher working on projects that drive inclusivity and social impact.">
+  <PortfolioGrid items={portfolioItems} />
+  <ScrollHint />
+</BaseLayout>
+
+<style>
+  /* Import your portfolio styles */
+  @import '../styles/portfolio.css';
+</style>
+
+<script>
+  /* Import and initialize the image reveal script */
+  import '../scripts/image-reveal.js';
+</script>

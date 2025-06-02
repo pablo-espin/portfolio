@@ -1,0 +1,43 @@
+---
+interface PortfolioItem {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  link: string;
+  backgroundImage: string;
+}
+
+interface Props {
+  items: PortfolioItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="portfolio">
+    <div class="container">
+        <div class="portfolio-grid">
+            <!-- Name/Intro -->
+            <div class="intro-container">
+                <h1>Pablo Espinosa</h1>
+                <p>I'm a UX designer and digital humanities researcher working on projects that drive inclusivity and social impact.</p>
+            </div>
+
+            <!-- Portfolio Items -->
+            {items.map((item) => (
+                <a href={item.link} class="portfolio-link">
+                    <div class="portfolio-item" data-image={item.id}>
+                        <div class="background-image"></div>
+                        <div class="mosaic-overlay"></div>
+                        <div class="item-content" id={`${item.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}-card`}>
+                            <div class="subtitle">{item.subtitle}</div>
+                            <h3>{item.title}</h3>
+                            <p>{item.description}</p>
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </div>
+</section>
