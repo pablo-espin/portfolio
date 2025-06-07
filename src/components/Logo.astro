@@ -1,0 +1,240 @@
+---
+// Logo.astro - Animated PEC Logo Component
+interface Props {
+  size?: number; // Size in pixels (default: 60) - applies to width, height calculated from aspect ratio
+  width?: number; // Width in pixels (overrides size, height calculated from aspect ratio)
+  height?: number; // Height in pixels (overrides size, width calculated from aspect ratio)
+  className?: string;
+}
+
+const { size = 60, width, height, className = '' } = Astro.props;
+
+// Logo aspect ratio: 11:5
+const aspectRatio = 11 / 5;
+
+// Calculate final dimensions maintaining aspect ratio
+let finalWidth: number;
+let finalHeight: number;
+
+if (width && height) {
+  // Both specified - use as-is (user override)
+  finalWidth = width;
+  finalHeight = height;
+} else if (width) {
+  // Width specified - calculate height from aspect ratio
+  finalWidth = width;
+  finalHeight = width / aspectRatio;
+} else if (height) {
+  // Height specified - calculate width from aspect ratio
+  finalHeight = height;
+  finalWidth = height * aspectRatio;
+} else {
+  // Only size specified - use as width, calculate height
+  finalWidth = size;
+  finalHeight = size / aspectRatio;
+}
+---
+
+<div class={`logo-container ${className}`} style={`width: ${finalWidth}px; height: ${finalHeight}px;`}>
+  <svg 
+    width={finalWidth} 
+    height={finalHeight} 
+    viewBox="-0.5 -0.5 12 6" 
+    xmlns="http://www.w3.org/2000/svg"
+    class="logo-svg"
+  >
+    <!-- P Letter (rows 0-4, cols 0-2) -->
+    <!-- Row 0 -->
+    <rect class="square p-0-0" x="0" y="0" width="1" height="1" fill="#fafafa"/>
+    <rect class="square p-1-0" x="1" y="0" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 1 -->
+    <rect class="square p-2-1" x="2" y="1" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 2 -->
+    <rect class="square p-0-2" x="0" y="2" width="1" height="1" fill="#fafafa"/>
+    <rect class="square p-2-2" x="2" y="2" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 3 -->
+    <rect class="square p-0-3" x="0" y="3" width="1" height="1" fill="#fafafa"/>
+    <rect class="square p-1-3" x="1" y="3" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 4 -->
+    <rect class="square p-0-4" x="0" y="4" width="1" height="1" fill="#fafafa"/>
+    <!-- Yellow square positioned here so it stays on top when the animation is triggered -->
+    <rect class="square p-0-1" x="0" y="1" width="1" height="1" fill="#ffe570"/>
+
+    <!-- E Letter (rows 0-4, cols 4-6) -->
+    <!-- Row 0 -->
+    <rect class="square e-5-0" x="5" y="0" width="1" height="1" fill="#fafafa"/>
+  
+    <!-- Row 1 -->
+    <rect class="square e-4-1" x="4" y="1" width="1" height="1" fill="#fafafa"/>
+    <rect class="square e-6-1" x="6" y="1" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 2 -->
+    <rect class="square e-4-2" x="4" y="2" width="1" height="1" fill="#fafafa"/>
+    <rect class="square e-5-2" x="5" y="2" width="1" height="1" fill="#fafafa"/>
+    <rect class="square e-6-2" x="6" y="2" width="1" height="1" fill="#ff7700"/>
+    
+    <!-- Row 3 -->
+    <rect class="square e-4-3" x="4" y="3" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 4 -->
+    <rect class="square e-5-4" x="5" y="4" width="1" height="1" fill="#fafafa"/>
+
+
+    <!-- C Letter (rows 0-3, cols 8-10) -->
+    <!-- Row 0 -->
+    <rect class="square c-9-0" x="9" y="0" width="1" height="1" fill="#fafafa"/>
+    <rect class="square c-10-0" x="10" y="0" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 1 -->
+    <rect class="square c-8-1" x="8" y="1" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 2 -->
+    <rect class="square c-8-2" x="8" y="2" width="1" height="1" fill="#fafafa"/>
+    
+    <!-- Row 3 -->
+    <rect class="square c-9-3" x="9" y="3" width="1" height="1" fill="#fafafa"/>
+    <rect class="square c-10-3" x="10" y="3" width="1" height="1" fill="#fafafa"/>
+  </svg>
+</div>
+
+<style>
+  .logo-container {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .logo-svg {
+    overflow: hidden;
+    /* Squares now fit within the expanded viewBox */
+    display: block; /* Remove inline spacing */
+    vertical-align: top; /* Ensure proper alignment */
+  }
+
+  .square {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center;
+    will-change: transform;
+    transform: scale(1.2);
+  }
+
+  /* Stagger the animation delays for a cascading effect */
+  .square:nth-child(1) { transition-delay: 0.02s; }
+  .square:nth-child(2) { transition-delay: 0.04s; }
+  .square:nth-child(3) { transition-delay: 0.06s; }
+  .square:nth-child(4) { transition-delay: 0.08s; }
+  .square:nth-child(5) { transition-delay: 0.10s; }
+  .square:nth-child(6) { transition-delay: 0.12s; }
+  .square:nth-child(7) { transition-delay: 0.14s; }
+  .square:nth-child(8) { transition-delay: 0.16s; }
+  .square:nth-child(9) { transition-delay: 0.18s; }
+  .square:nth-child(10) { transition-delay: 0.20s; }
+  .square:nth-child(11) { transition-delay: 0.22s; }
+  .square:nth-child(12) { transition-delay: 0.24s; }
+  .square:nth-child(13) { transition-delay: 0.26s; }
+  .square:nth-child(14) { transition-delay: 0.28s; }
+  .square:nth-child(15) { transition-delay: 0.30s; }
+  .square:nth-child(16) { transition-delay: 0.32s; }
+  .square:nth-child(17) { transition-delay: 0.34s; }
+  .square:nth-child(18) { transition-delay: 0.36s; }
+  .square:nth-child(19) { transition-delay: 0.38s; }
+  .square:nth-child(20) { transition-delay: 0.40s; }
+  .square:nth-child(21) { transition-delay: 0.42s; }
+  .square:nth-child(22) { transition-delay: 0.44s; }
+  .square:nth-child(23) { transition-delay: 0.46s; }
+
+  /* Collapsed state - all squares move to center line */
+  .logo-container.collapsed .square,
+  .logo-container:hover .square {
+    transform: scale(1.2) translateY(calc(2.5px - var(--original-y)));
+  }
+
+  /* Set CSS custom properties for original Y positions */
+  .p-0-0, .p-1-0, .e-5-0, .c-9-0, .c-10-0 { --original-y: 0.5px; }
+  .p-0-1, .p-2-1, .e-4-1, .e-6-1, .c-8-1 { --original-y: 1.5px; }
+  .p-0-2, .p-2-2, .e-4-2, .e-5-2, .e-6-2, .c-8-2 { --original-y: 2.5px; }
+  .p-0-3, .p-1-3, .e-4-3, .c-9-3, .c-10-3 { --original-y: 3.5px; }
+  .p-0-4, .e-5-4 { --original-y: 4.5px; }
+
+  /* Mobile: trigger on scroll */
+  @media (max-width: 900px) {
+    .logo-container.in-view .square {
+      transform: scale(1.2) translateY(calc(2.5px - var(--original-y)));
+    }
+    
+    .logo-container:hover .square {
+      transform: scale(1.2);
+    }
+  }
+
+  /* Desktop: trigger on hover */
+  @media (min-width: 901px) {
+    .logo-container.in-view .square {
+      transform: scale(1.2);
+    }
+  }
+</style>
+
+<script>
+  class LogoAnimation {
+    constructor() {
+      this.setupScrollTrigger();
+    }
+
+    setupScrollTrigger() {
+      // Only enable scroll trigger on mobile/tablet
+      if (window.innerWidth <= 900) {
+        const logoContainer = document.querySelector('.logo-container');
+        if (!logoContainer) return;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+              entry.target.classList.add('in-view');
+            }
+          });
+        }, {
+          threshold: [0.5],
+          rootMargin: '0px'
+        });
+
+        observer.observe(logoContainer);
+      }
+    }
+
+    // Method to manually trigger animation
+    trigger() {
+      const logoContainer = document.querySelector('.logo-container');
+      if (logoContainer) {
+        logoContainer.classList.add('collapsed');
+        setTimeout(() => {
+          logoContainer.classList.remove('collapsed');
+        }, 1200); // Duration + some buffer
+      }
+    }
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new LogoAnimation());
+  } else {
+    new LogoAnimation();
+  }
+
+  // Handle window resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      new LogoAnimation();
+    }, 250);
+  });
+
+  // Export class for external access
+  window.LogoAnimation = LogoAnimation;
+</script>

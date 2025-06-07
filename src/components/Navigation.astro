@@ -1,0 +1,92 @@
+---
+// Define props, import modules, or process data here
+import Logo from '../components/Logo.astro'
+// Nav links defines as an array
+const navLinks = [
+  { name: 'Writing', href: '/writing' },
+  { name: 'Research', href: '/research' },
+  { name: 'About Me', href: '/about' },
+  { name: 'Get in Touch', href: 'mailto:contact@pabloespinosa.co' }
+];
+---
+
+<!-- This is the component template - HTML with Astro syntax -->
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- Logo section -->
+    <div class="nav-logo">
+      <a href="/">
+        <Logo size={70}/>
+      </a>
+    </div>
+    
+    <!-- Navigation links -->
+    <div class="nav-links">
+      {navLinks.map((link) => (
+        <a href={link.href} class="nav-link">
+          {link.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* Component-scoped styles - these only apply to this component */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-nav);
+    background: var(--color-bg-primary);
+    /* border-bottom: 1px solid var(--color-border); */
+  }
+
+  .nav-container {
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo .logo {
+    height: 40px;
+    width: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Host Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-link:hover {
+    opacity: 0.7;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .nav-container {
+      padding: 1rem;
+    }
+    
+    .nav-links {
+      gap: 1rem;
+    }
+    
+    .nav-link {
+      font-size: 0.9rem;
+    }
+  }
+</style>
