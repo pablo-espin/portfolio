@@ -41,8 +41,8 @@ const imageConfigs = {
         pieces: [
             { width: 28, height: 52, top: 0, left: 0, direction: 'slide-left' },
             { width: 72.1, height: 52, top: 0, left: 27.9, direction: 'slide-up' },
-            { width: 60.4, height: 48, top: 52, left: 0, direction: 'slide-down' },
-            { width: 39.6, height: 48, top: 52, left: 60.4, direction: 'slide-right' }
+            { width: 60.4, height: 48.5, top: 52, left: 0, direction: 'slide-down' },
+            { width: 39.6, height: 48.5, top: 52, left: 60.4, direction: 'slide-right' }
         ]
     },
     5: {

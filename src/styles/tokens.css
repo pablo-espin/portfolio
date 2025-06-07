@@ -7,7 +7,8 @@
     /* Colors */
     --color-bg-primary: hsl(0, 0%, 6%);
     --color-text-primary: hsl(30, 8%, 95%);
-    --color-links: hsl(46, 59%, 73%);
+    --color-text-secondary: hsl(0, 0%, 89%);
+    --color-text-accent: hsl(46, 59%, 73%);
     --color-border: hsl(0, 0%, 70%);
 
     /* ##################
