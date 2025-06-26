@@ -1,0 +1,136 @@
+---
+import Navigation from '../components/Navigation.astro';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  description: string;
+  heroImage?: string;
+  tags?: string[];
+}
+
+const { title, subtitle, description, heroImage, tags } = Astro.props;
+---
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} - Pablo Espinosa</title>
+    <meta name="description" content={description}>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Global styles -->
+    <style is:global>
+        @import url('../styles/tokens.css');
+        @import url('../styles/portfolio.css');
+    </style>
+    
+    <!-- Case study specific styles -->
+    <style>
+        .case-study {
+            max-width: var(--container-2xl);
+            margin: 0 auto;
+            padding: var(--space-8) var(--space-4);
+            padding-top: calc(var(--navbar-height) + var(--space-16));
+        }
+
+        .case-study-header {
+            margin: 0 auto 4rem auto;
+        }
+
+        .case-study-content {
+            margin: 0 auto;
+        }
+
+        .case-study-header .subtitle {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-accent);
+            letter-spacing: 0.05em;
+        }
+
+        .case-study-header h1 {
+            font-size: var(--font-size-7xl);
+            font-weight: var(--font-weight-medium);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--space-0);
+            color: var(--color-text-primary);
+        }
+
+        .case-study-header .description {
+            font-size: var(--font-size-md);
+            font-weight: var(--font-weight-light);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-6);
+        }
+
+        .tags {
+            display: flex;
+            gap: var(--space-2);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-xs);
+            font-family: var(--font-family-mono);
+        }
+
+        .hero-image {
+            margin: 0 auto var(--space-20) auto;
+            max-width: 1200px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+        }
+
+        @media (max-width: 768px) {
+            .case-study {
+                padding: var(--space-4) var(--space-4);
+            }
+            
+            .case-study-header {
+                margin-bottom: var(--space-8);
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <Navigation />
+    <main class="case-study">
+        <header class="case-study-header">
+            <div class="subtitle">{subtitle}</div>
+            <h1>{title}</h1>
+            <p class="description">{description}</p>
+            
+            {tags && tags.length > 0 && (
+                <div class="tags">
+                    {tags.map(tag => <span class="tag">{tag}</span>)}
+                </div>
+            )}
+        </header>
+
+        {heroImage && (
+            <div class="hero-image">
+                <img src={heroImage} alt={title} />
+            </div>
+        )}
+
+        <div class="case-study-content">
+            <slot />
+        </div>
+    </main>
+</body>
+</html>

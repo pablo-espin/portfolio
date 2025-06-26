@@ -1,0 +1,349 @@
+---
+interface Props {
+  src: string;
+  srcMobile?: string; // Mobile-optimized version
+  poster?: string;
+  caption?: string;
+  size?: 'small' | 'medium' | 'large' | 'full' | 'fullscreen';
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  controls?: boolean;
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none';
+  height?: string; // Custom height for fullscreen
+  lazyLoad?: boolean; // Enable lazy loading
+}
+
+const { 
+  src, 
+  srcMobile,
+  poster, 
+  caption, 
+  size = 'large', 
+  autoplay = false, 
+  loop = false, 
+  muted = true,
+  controls = true,
+  objectFit = 'cover',
+  height = '100vh',
+  lazyLoad = true
+} = Astro.props;
+---
+
+<figure class={`video size-${size} ${lazyLoad ? 'lazy-video-container' : ''}`}>
+    <video 
+        data-src={lazyLoad ? src : undefined}
+        data-src-mobile={lazyLoad && srcMobile ? srcMobile : undefined}
+        src={!lazyLoad ? src : undefined}
+        poster={poster}
+        controls={controls}
+        autoplay={lazyLoad ? false : autoplay}
+        loop={loop}
+        muted={muted}
+        playsinline
+        preload={lazyLoad ? "none" : "metadata"}
+        style={size === 'fullscreen' ? `object-fit: ${objectFit}; height: ${height}` : `object-fit: ${objectFit}`}
+        class={lazyLoad ? 'lazy-video' : ''}
+        data-autoplay={autoplay}
+    >
+        {/* Mobile source (only if not lazy loading) */}
+        {!lazyLoad && srcMobile && (
+            <source src={srcMobile} media="(max-width: 768px)" type="video/mp4" />
+        )}
+        {!lazyLoad && (
+            <source src={src} type="video/mp4" />
+        )}
+        Your browser does not support the video tag.
+    </video>
+
+    {/* Lazy loading placeholder */}
+    {lazyLoad && (
+        <div class="video-placeholder">
+            <div class="placeholder-content">
+                <button class="play-button" aria-label="Load and play video">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </button>
+                <p class="load-message">Click to load video</p>
+            </div>
+        </div>
+    )}
+
+    {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+    .video {
+        margin: var(--space-8) 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .video video {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: var(--radius-base);
+        background: var(--color-bg-primary);
+    }
+
+    /* Container-based sizes */
+    .size-small {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .size-medium {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .size-large {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Full-width but contained within margins */
+    .size-full {
+        max-width: 100%;
+        /* margin: var(--space-8) calc(-1 * var(--space-4)); */
+    }
+
+    /* True fullscreen - breaks out completely */
+    .size-fullscreen {
+        width: 100vw;
+        margin: 0;
+        margin-left: calc(-50vw + 50%);
+        margin-bottom: var(--space-8);
+        max-width: none;
+    }
+
+    .size-fullscreen video {
+        border-radius: 0;
+        width: 100%;
+        height: 100vh; /* Default, can be overridden by height prop */
+    }
+
+    /* Lazy loading placeholder */
+    .video-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+        cursor: pointer;
+        transition: opacity var(--duration-normal) ease;
+        border-radius: var(--radius-base);
+        backdrop-filter: blur(10px);
+    }
+
+    .size-fullscreen .video-placeholder {
+        border-radius: 0;
+    }
+
+    .placeholder-content {
+        text-align: center;
+        color: var(--color-text-primary);
+    }
+
+    .play-button {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-text-primary);
+        cursor: pointer;
+        transition: all var(--duration-normal) ease;
+        backdrop-filter: blur(10px);
+        margin: 0 auto var(--space-4) auto;
+    }
+
+    .play-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.1);
+    }
+
+    .load-message {
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-sm);
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    /* Hide placeholder when video is loaded */
+    .video-loaded .video-placeholder {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Responsive fullscreen heights */
+    @media (max-width: 768px) {
+        .size-fullscreen video {
+            height: 60vh;
+        }
+        
+        .size-full {
+            margin: var(--space-8) 0;
+        }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+        }
+
+        .load-message {
+            font-size: var(--font-size-xs);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .size-fullscreen video {
+            height: 50vh;
+        }
+
+        .play-button {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    figcaption {
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-xs);
+        color: var(--color-text-accent);
+        margin-top: var(--space-2);
+        text-align: center;
+    }
+
+    /* Custom video controls styling to match your dark theme */
+    .video video::-webkit-media-controls-panel {
+        background-color: rgba(0, 0, 4, 0.8);
+    }
+
+    .video video::-webkit-media-controls-play-button,
+    .video video::-webkit-media-controls-volume-slider,
+    .video video::-webkit-media-controls-timeline {
+        filter: invert(1);
+    }
+
+    /* Hide controls for fullscreen autoplay videos */
+    .size-fullscreen video[controls="false"] {
+        pointer-events: none;
+    }
+
+    .size-fullscreen video[controls="false"]::-webkit-media-controls {
+        display: none !important;
+    }
+
+    .size-fullscreen video[controls="false"]::-webkit-media-controls-panel {
+        display: none !important;
+    }
+</style>
+
+<script>
+// Lazy loading video implementation
+document.addEventListener('DOMContentLoaded', function() {
+    const lazyVideoContainers = document.querySelectorAll('.lazy-video-container');
+    
+    lazyVideoContainers.forEach(container => {
+        const video = container.querySelector('.lazy-video');
+        const placeholder = container.querySelector('.video-placeholder');
+        const playButton = container.querySelector('.play-button');
+        
+        if (!video || !placeholder) return;
+        
+        function loadVideo() {
+            const src = video.dataset.src;
+            const srcMobile = video.dataset.srcMobile;
+            
+            // Choose appropriate source based on screen size
+            const isMobile = window.innerWidth <= 768;
+            const videoSrc = (isMobile && srcMobile) ? srcMobile : src;
+            
+            // Clear existing sources
+            video.innerHTML = '';
+            
+            // Add responsive sources
+            if (srcMobile) {
+                const mobileSource = document.createElement('source');
+                mobileSource.src = srcMobile;
+                mobileSource.media = '(max-width: 768px)';
+                mobileSource.type = 'video/mp4';
+                video.appendChild(mobileSource);
+            }
+            
+            const desktopSource = document.createElement('source');
+            desktopSource.src = src;
+            desktopSource.type = 'video/mp4';
+            video.appendChild(desktopSource);
+            
+            // Set main src as fallback
+            video.src = videoSrc;
+            
+            // Load the video
+            video.load();
+            
+            // Enable autoplay and mark as loaded
+            video.addEventListener('loadeddata', () => {
+                container.classList.add('video-loaded');
+                
+                // Check if video should autoplay
+                const shouldAutoplay = video.dataset.autoplay === 'true';
+                
+                if (shouldAutoplay) {
+                    video.autoplay = true;
+                    video.play().catch(console.error);
+                }
+            }, { once: true });
+            
+            // Handle loading errors
+            video.addEventListener('error', () => {
+                console.error('Error loading video:', videoSrc);
+                placeholder.innerHTML = '<p style="color: #ff6b6b; font-family: var(--font-family-mono); font-size: var(--font-size-sm);">Error loading video</p>';
+            });
+        }
+        
+        // Load video when play button is clicked
+        if (playButton) {
+            playButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                loadVideo();
+            });
+        }
+        
+        // Auto-load when scrolled into view (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+                    // For autoplay videos, load automatically
+                    const shouldAutoplay = video.dataset.autoplay === 'true';
+                    
+                    if (shouldAutoplay) {
+                        loadVideo();
+                    }
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { 
+            threshold: [0.3],
+            rootMargin: '50px'
+        });
+        
+        observer.observe(container);
+    });
+});
+</script>

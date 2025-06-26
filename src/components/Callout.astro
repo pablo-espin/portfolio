@@ -1,0 +1,72 @@
+---
+interface Props {
+  type?: 'info' | 'warning' | 'success' | 'quote';
+  title?: string;
+}
+
+const { type = 'info', title } = Astro.props;
+---
+
+<div class={`callout type-${type}`}>
+    {title && <div class="callout-title">{title}</div>}
+    <div class="callout-content">
+        <slot />
+    </div>
+</div>
+
+<style>
+    .callout {
+        margin: var(--space-8) 0;
+        padding: var(--space-6);
+        border-radius: var(--radius-lg);
+        border-left: 4px solid;
+    }
+
+    .type-info {
+        background: rgba(70, 130, 180, 0.1);
+        border-left-color: #4682b4;
+    }
+
+    .type-warning {
+        background: rgba(255, 193, 7, 0.1);
+        border-left-color: #ffc107;
+    }
+
+    .type-success {
+        background: rgba(40, 167, 69, 0.1);
+        border-left-color: #28a745;
+    }
+
+    .type-quote {
+        background: rgba(108, 117, 125, 0.1);
+        border-left-color: #6c757d;
+    }
+
+    .callout-title {
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-semibold);
+        margin-bottom: var(--space-2);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .callout-content {
+        font-size: var(--font-size-base);
+        line-height: var(--line-height-relaxed);
+    }
+
+    .callout-content :global(ul),
+    .callout-content :global(ol) {
+        margin: var(--space-3) 0;
+        padding-left: var(--space-5);
+    }
+
+    .callout-content :global(li) {
+        margin-bottom: var(--space-2);
+    }
+
+    .type-quote .callout-content {
+        font-style: italic;
+    }
+</style>

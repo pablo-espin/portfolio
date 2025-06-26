@@ -36,6 +36,10 @@
     --font-size-xl: clamp(1.5rem, 4vw, 2.5rem);           /* 24-40px */
     --font-size-2xl: clamp(2rem, 5vw, 3.5rem);            /* 32-56px */
     --font-size-3xl: clamp(2.5rem, 6vw, 4rem);            /* 40-64px */
+    --font-size-4xl: clamp(3rem, 7vw, 5rem);              /* 48-80px */
+    --font-size-5xl: clamp(3.5rem, 8vw, 6rem);            /* 56-96px */
+    --font-size-6xl: clamp(4rem, 9vw, 7.5rem);            /* 64-120px */
+    --font-size-7xl: clamp(4.5rem, 10vw, 9rem);           /* 72-144px */
     
     /* Line Heights */
     --line-height-tight: 1.1;

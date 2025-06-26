@@ -1,0 +1,73 @@
+---
+interface Props {
+  size?: 'small' | 'normal' | 'large';
+  color?: 'primary' | 'secondary' | 'accent';
+}
+
+const { size = 'normal', color = 'primary' } = Astro.props;
+---
+
+<div class={`text size-${size} color-${color}`}>
+    <slot />
+</div>
+
+<style>
+    .text {
+        margin: var(--space-6) 0;
+        line-height: var(--line-height-relaxed);
+    }
+
+    .size-small {
+        font-size: var(--font-size-sm);
+    }
+
+    .size-normal {
+        font-size: var(--font-size-base);
+    }
+
+    .size-large {
+        font-size: var(--font-size-md);
+    }
+
+    .color-primary {
+        color: var(--color-text-primary);
+    }
+
+    .color-secondary {
+        color: var(--color-text-secondary);
+    }
+
+    .color-accent {
+        color: var(--color-text-accent);
+        font-style: italic;
+    }
+
+    /* Handle paragraph spacing within text blocks */
+    .text :global(p) {
+        margin-bottom: var(--space-4);
+    }
+
+    .text :global(p:last-child) {
+        margin-bottom: 0;
+    }
+
+    .text :global(strong) {
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-primary);
+    }
+
+    .text :global(em) {
+        font-style: italic;
+        color: var(--color-text-secondary);
+    }
+
+    .text :global(ul),
+    .text :global(ol) {
+        margin: var(--space-4) 0;
+        padding-left: var(--space-6);
+    }
+
+    .text :global(li) {
+        margin-bottom: var(--space-2);
+    }
+</style>

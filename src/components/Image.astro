@@ -1,0 +1,71 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  size?: 'small' | 'medium' | 'large' | 'full';
+  rounded?: boolean;
+}
+
+const { src, alt, caption, size = 'large', rounded = false } = Astro.props;
+---
+
+<figure class={`image size-${size} ${rounded ? 'rounded' : ''}`}>
+    <img src={src} alt={alt} loading="lazy" />
+    {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+    .image {
+        margin: var(--space-8) 0;
+        text-align: center;
+    }
+
+    .project-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform var(--duration-normal) ease;
+    }
+
+    .size-small {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .size-medium {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .size-large {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .size-full {
+        max-width: 100%;
+        margin: var(--space-8) calc(-1 * var(--space-4));
+    }
+
+    .rounded img {
+        border-radius: var(--radius-lg);
+    }
+
+    figcaption {
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-xs);
+        color: var(--color-text-accent);
+        margin-top: var(--space-2);
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .size-full {
+            margin: var(--space-8) 0;
+        }
+    }
+</style>
