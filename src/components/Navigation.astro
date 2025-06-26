@@ -58,21 +58,43 @@ const navLinks = [
 
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: var(--space-8);
     align-items: center;
   }
 
   .nav-link {
-    color: #ffffff;
+    color: var(--color-text-primary);
     text-decoration: none;
-    font-family: 'Host Grotesk', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
+    position: relative;
     transition: opacity 0.2s ease;
   }
 
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    width: 0;
+    height: 0.1em;
+    background-color: var(--color-text-primary);
+    opacity: 0.9;
+    transition: width 0.3s ease;
+  }
+
+  /* Expand underline to full width on hover */
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
   .nav-link:hover {
-    opacity: 0.7;
+    opacity: 0.9;
+  }
+
+  .nav-link:active {
+    text-decoration: underline;
   }
 
   /* Mobile responsiveness */

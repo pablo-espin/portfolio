@@ -2,3 +2,33 @@
     <span class="desktop-hint">Hover to reveal</span>
     <span class="mobile-hint">Scroll to reveal</span>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollHint = document.getElementById('scrollHint');
+    if (!scrollHint) return;
+    
+    let hasInteracted = false;
+
+    function hideScrollHint() {
+        if (!hasInteracted) {
+            hasInteracted = true;
+            scrollHint.classList.add('hidden');
+        }
+    }
+
+    // Hide on scroll
+    window.addEventListener('scroll', hideScrollHint, { passive: true });
+
+    // Hide on hover over portfolio items
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    portfolioItems.forEach(item => {
+        item.addEventListener('mouseenter', hideScrollHint);
+    });
+
+    // Hide on touch/interaction with portfolio items (mobile)
+    portfolioItems.forEach(item => {
+        item.addEventListener('touchstart', hideScrollHint, { passive: true });
+    });
+});
+</script>
