@@ -1,0 +1,201 @@
+---
+import ProjectLayout from "../layouts/ProjectLayout.astro";
+import Image from "../components/Image.astro";
+import Video from "../components/Video.astro";
+---
+
+<style is:global>
+    .three-column-text {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-8);
+        margin: var(--space-10) 0;
+    }
+
+    .three-column-text p {
+        margin: 0;
+        font-size: var(--font-size-base);
+        line-height: var(--line-height-normal);
+        font-weight: var(--font-weight-regular);
+        color: var(--color-text-primary);
+    }
+
+    .video-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: var(--space-4);
+    }
+
+    .video-container-left {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 60.8%;
+    }
+
+    .video-container-right {
+        display: flex;
+        width: 39.2%;
+    }
+
+    .second-video-container {
+        display: flex;
+        gap: var(--space-4);
+    }
+
+    .cauce-video {
+        padding-bottom: var(--space-4);
+    }
+
+    .lo-necesario-mockup {
+        width: 28%;
+    }
+
+    .sequencer-mockup {
+        width: 72%;
+    }
+
+    .mockup-images {
+        display: flex;
+        gap: var(--space-4);
+    }
+
+    .three-column-text .end-column {
+        grid-column: 3;
+    }
+
+    @media (max-width: 768px) {
+        .three-column-text {
+            grid-template-columns: 1fr;
+            gap: var(--space-6);
+        }
+        
+        .three-column-text .end-column {
+            grid-column: 1;
+        }
+
+        .video-container {
+            flex-direction: column;
+        }
+
+        .video-container-left,
+        .video-container-right {
+            width: 100%;
+        }
+
+    }
+</style>
+
+<ProjectLayout
+    title="Carambolo"
+    subtitle="Web design | Visual identity | Animation"
+    description="Creating the visual identity of a Latin American rock, jazz and progressive music band"
+>
+
+    <div class="video-container">
+        <div class="video-container-left">
+            <Video
+                src="../videos/cauce-animation-optimized.mp4"
+                srcMobile="../videos/cauce-animation-mobile.mp4"
+                poster="../images/carambolo-cauce-poster.webp"
+                size="full"
+                autoplay={true}
+                loop={true}
+                controls={false}
+                muted={true}
+                objectFit="cover"
+                className="cauce-video"
+            />
+
+            <Video
+                src="../videos/horrenberg-animation-optimized.mp4"
+                srcMobile="../videos/horrenberg-animation-mobile.mp4"
+                poster="../images/carambolo-horrenberg-poster.webp"
+                size="full"
+                autoplay={true}
+                loop={true}
+                controls={false}
+                muted={true}
+                objectFit="cover"
+                className="horrenberg-video"
+            />
+        </div>
+        <div class="video-container-right">
+            <Video
+                src="../videos/lejanias-animation-optimized.mp4"
+                srcMobile="../videos/lejanias-animation-mobile.mp4"
+                poster="../images/carambolo-lejanias-poster.webp"
+                size="full"
+                autoplay={true}
+                loop={true}
+                controls={false}
+                muted={true}
+                objectFit="cover"
+                className="lo-necesario-video"
+            />
+        </div>
+    </div>
+
+    <div class="three-column-text">
+        <p>Carambolo is a music and art project combining rock sounds, a jazz atmosphere, Latin American rhythms and progressive arrangements. I led the visual identity of the project through the creation of images, animations and cover art for the releases. The visual identity is inspired by the pulsating flows of nature and the texture of lichens.</p>
+    </div>
+
+    <div class="mockup-images">
+        <Image
+            src="../images/carambolo-cauce-ep-mockup-cara-a.webp"
+            alt="Side A of Cauce EP vinyl record on a dark green background"
+        />
+            
+        <Image
+            src="../images/carambolo-cauce-ep-mockup-cara-b.webp"
+            alt="Side B of Cauce EP vinyl record on a dark blue background"
+        />
+    </div>
+
+    <div class="three-column-text">
+        <p class="end-column">I designed the first vinyl with two EPs. It contains an insert with the song's lyrics and the colours were chosen with the help of the project's online community.</p>
+    </div>
+
+    <div class="second-video-container">
+        <Video
+            src="../videos/carambolo-mobile-mockup-optimized.mp4"
+            srcMobile="../videos/carambolo-mobile-mockup-mobile.mp4"
+            poster="../images/carambolo-mobile-mockup-poster.webp"
+            size="full"
+            autoplay={true}
+            loop={true}
+            controls={false}
+            muted={true}
+            className="lo-necesario-mockup"
+        />
+
+        <Video
+            src="../videos/carambolo-sequencer-optimized.mp4"
+            srcMobile="../videos/carambolo-sequencer-mobile.mp4"
+            poster="../images/carambolo-sequencer-poster.webp"
+            size="full"
+            autoplay={true}
+            loop={true}
+            controls={false}
+            muted={true}
+            className="sequencer-mockup"
+        />
+    </div>
+
+    <div class="three-column-text">
+        <p>The website follows the same visual identity and aims to highlight the music. I also developed a custom digital sequencer (a device that lets you record, edit, and playback sounds) using Carambolo's sounds to add some playfulness and interactivity to the project.</p>
+    </div>
+
+</ProjectLayout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cauceVideo = document.querySelector('.cauce-video video');
+        if (cauceVideo) {
+            cauceVideo.addEventListener('loadedmetadata', () => {
+                cauceVideo.currentTime = 13;
+            });
+        }
+    });
+</script>
